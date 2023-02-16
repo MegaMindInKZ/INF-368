@@ -10,8 +10,25 @@ type Node struct {
 	Next *Node
 }
 
+func NewNode(val int) Node {
+	return Node{val: val}
+}
+func AddVal(n *Node, val int) *Node {
+	if n == nil {
+		t := NewNode(val)
+		n = &t
+		return n
+	}
+	n.Next = AddVal(n.Next, val)
+	return n
+}
+
 func main() {
-	s := New()
+	n := NewNode(2)
+	n = *AddVal(&n, 3)
+	n = *AddVal(&n, 4)
+	fmt.Println(n.Next.Next.val)
+	s := NewStack()
 	s.Push(2)
 	s.Push(3)
 	s.PrintReverse()
@@ -20,6 +37,9 @@ func main() {
 	s.Print()
 	fmt.Println(s.Peek())
 	s.Print()
+	s.Push(3)
+	s.Increment()
+	s.Print()
 }
 
 type Stack struct {
@@ -27,7 +47,7 @@ type Stack struct {
 	arr    []int
 }
 
-func New() Stack {
+func NewStack() Stack {
 	return Stack{length: 0}
 }
 
